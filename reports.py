@@ -1,24 +1,24 @@
 
 # Report functions
 import csv
+import string
 
-
-def read_file(file_name):  # reads an external file
+def read_file(file_name, categories = None):  # reads an external file
     '''
     Argument: a file name
-    Returns: list
+    Returns: a list
     '''
     with open(file_name, newline = "\n") as file:
         reader = csv.reader(file, delimiter = "\t")
         data = []
         for row in reader:
             #row = [title, number_sold, release_date, genre, publisher]
-            title = row[0]
-            number_sold = float(row[1])
-            release_date = row[2]
-            genre = row[3]
-            publisher = row[4]
-            data.append([title, number_sold, release_date, genre, publisher])
+            title = 0
+            number_sold = 1
+            release_date = 2
+            genre = 3
+            publisher = 4
+            data.append([row[title], row[number_sold], row[release_date], row[genre], row[publisher]])
         return(data)
 
 
@@ -70,5 +70,34 @@ def count_by_genre(file_name, genre):
 def line_number_by_title(file_name, title):
     try:
         return([title in game for game in read_file(file_name)].index(True)+1)
-    except:
+    except BaseException:
         raise ValueError
+
+
+def sort_abc(file_name):
+    '''
+    Sorts the games by title.
+    Argument: a file name
+    Returns: a list of strings
+    '''
+    first = 0
+    a = list(string.ascii_uppercase)
+    sorted1 = []
+    for row in read_file(file_name):
+        sorted1.append(row[0][0])
+    print(sorted1)
+
+
+
+def get_genres(file_name):
+    '''
+    Find the genres in the file.
+    Argument: a file name
+    Returns: abc sorted list of the genres
+    '''
+    genres = []
+    for i, game in enumerate(read_file(file_name)):
+        genres.append(read_file(file_name)[i][3])
+    return(sorted(set(genres)))
+
+get_genres("game_stat.txt")
