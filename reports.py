@@ -53,4 +53,15 @@ def get_latest(file_name):
         title.append(read_file(file_name)[i][0])
     mix = list(zip(years,title))
     return(sorted(mix, key = lambda x: x[0], reverse = True)[0][1])
-    
+
+
+def count_by_genre(file_name, genre):
+    '''
+    Counts the games by the given genre.
+    Arguments: a file name and a genre
+    Returns: an integer
+    '''
+    genres = []
+    for i, game in enumerate(read_file(file_name)):
+        genres.append(read_file(file_name)[i][3])
+    return(genres.count(genre))
