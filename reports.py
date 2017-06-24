@@ -37,3 +37,20 @@ def decide(file_name, year):
     Returns: a boolean if there is a game in the given year
     '''
     return any(year in game for game in read_file(file_name))
+
+
+def get_latest(file_name):
+    '''
+    Finds the title of the latest game
+    Argument: a file name
+    Returns: the title of the game as a string
+    '''
+    #row = [title, number_sold, release_date, genre, publisher]
+    years = []
+    title = []
+    for i, game in enumerate(read_file(file_name)):
+        years.append(read_file(file_name)[i][2])
+        title.append(read_file(file_name)[i][0])
+    mix = list(zip(years,title))
+    return(sorted(mix, key = lambda x: x[0], reverse = True)[0][1])
+    
