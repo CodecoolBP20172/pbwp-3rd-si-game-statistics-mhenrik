@@ -3,7 +3,7 @@
 import csv
 import string
 
-def read_file(file_name, categories = None):  # reads an external file
+def read_file(file_name, title = None):  # reads an external file
     '''
     Argument: a file name
     Returns: a list
@@ -18,7 +18,7 @@ def read_file(file_name, categories = None):  # reads an external file
             release_date = 2
             genre = 3
             publisher = 4
-            data.append([row[title], row[number_sold], row[release_date], row[genre], row[publisher]])
+            data.append([row[title], float(row[number_sold]), row[release_date], row[genre], row[publisher]])
         return(data)
 
 
@@ -100,4 +100,17 @@ def get_genres(file_name):
         genres.append(read_file(file_name)[i][3])
     return(sorted(set(genres)))
 
-get_genres("game_stat.txt")
+
+def when_was_top_sold_fps(file_name):
+    '''Finds the release date of the top sold "First-person shooter" game
+    Argument: a file name
+    Returns: an integer
+    '''
+    sold = []
+    date = []
+    for i, game in enumerate(read_file(file_name)):
+        read_file(file_name)[i][3] == "First-person shooter"
+        sold.append(read_file(file_name)[i][1])
+        date.append(read_file(file_name)[i][2])
+    mix = list(zip(sold,date))
+    return sorted(mix, key = lambda x: x[0], reverse=True)[0][1]
