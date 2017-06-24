@@ -65,3 +65,10 @@ def count_by_genre(file_name, genre):
     for i, game in enumerate(read_file(file_name)):
         genres.append(read_file(file_name)[i][3])
     return(genres.count(genre))
+
+
+def line_number_by_title(file_name, title):
+    try:
+        return([title in game for game in read_file(file_name)].index(True)+1)
+    except:
+        raise ValueError
