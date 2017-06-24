@@ -3,12 +3,12 @@
 import csv
 
 
-def read_file(filename):  # reads an external file
+def read_file(file_name):  # reads an external file
     '''
-    Argument: a filename
+    Argument: a file name
     Returns: list
     '''
-    with open(filename, newline = "\n") as file:
+    with open(file_name, newline = "\n") as file:
         reader = csv.reader(file, delimiter = "\t")
         data = []
         for row in reader:
@@ -22,10 +22,18 @@ def read_file(filename):  # reads an external file
         return(data)
 
 
-def count_games(filename):
+def count_games(file_name):
     '''
-    Argument: a filename
+    Argument: a file name
     Counts the number of games in a file.
     Returns: an integer
     '''
-    return(len(read_file(filename)))
+    return(len(read_file(file_name)))
+
+
+def decide(file_name, year):
+    '''
+    Arguments: a file name and a year
+    Returns: a boolean if there is a game in the given year
+    '''
+    return any(year in game for game in read_file(file_name))
