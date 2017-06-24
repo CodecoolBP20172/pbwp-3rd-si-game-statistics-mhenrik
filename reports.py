@@ -3,7 +3,7 @@
 import csv
 
 
-def read_file(filename = "game_stat.txt"):  # reads an external file
+def read_file(filename):  # reads an external file
     '''
     Argument: a filename
     Returns: list
@@ -23,3 +23,9 @@ def read_file(filename = "game_stat.txt"):  # reads an external file
 
 
 def count_games(filename):
+    '''
+    Argument: a filename
+    Counts the number of games in a file.
+    Returns: an integer
+    '''
+    return(len(read_file(filename)))
