@@ -108,9 +108,14 @@ def when_was_top_sold_fps(file_name):
     '''
     sold = []
     date = []
-    for i, game in enumerate(read_file(file_name)):
-        read_file(file_name)[i][3] == "First-person shooter"
-        sold.append(read_file(file_name)[i][1])
-        date.append(read_file(file_name)[i][2])
-    mix = list(zip(sold,date))
-    return sorted(mix, key = lambda x: x[0], reverse=True)[0][1]
+    if decide("game_stat.txt", "First-person shooter"):
+        for i, game in enumerate(read_file(file_name)):
+            if read_file(file_name)[i][3] == "First-person shooter":
+                sold.append(read_file(file_name)[i][1])
+                date.append(read_file(file_name)[i][2])
+        mix = list(zip(sold,date))
+        return sorted(mix, key = lambda x: x[0], reverse=True)[0][1]
+    else:
+        raise ValueError
+
+print(when_was_top_sold_fps("game_stat.txt"))
