@@ -4,7 +4,7 @@ import csv
 import string
 
 
-def read_file(file_name, title=None):
+def read_file(file_name):
     '''
     Reads an external file
     Args:
@@ -60,11 +60,11 @@ def get_latest(file_name):
     # row = [title, number_sold, release_date, genre, publisher]
     years = []
     title = []
-    for i, game in enumerate(read_file(file_name)):
-        years.append(read_file(file_name)[i][2])
-        title.append(read_file(file_name)[i][0])
-    mix = list(zip(years, title))
-    return(sorted(mix, key=lambda x: x[0], reverse=True)[0][1])
+    for i, game in enumerate(read_file(file_name)):  # i for indexing the file
+        years.append(read_file(file_name)[i][2])  # 2 is for release_date
+        title.append(read_file(file_name)[i][0])  # 0 is for title
+    mix = list(zip(years, title))  # join the lists
+    return(sorted(mix, key=lambda x: x[0], reverse=True)[0][1])  # key is for the sorted the find the years
 
 
 def count_by_genre(file_name, genre):
@@ -78,7 +78,7 @@ def count_by_genre(file_name, genre):
     '''
     genres = []
     for i, game in enumerate(read_file(file_name)):
-        genres.append(read_file(file_name)[i][3])
+        genres.append(read_file(file_name)[i][3])  # 3 is for the genres
     return(genres.count(genre))
 
 
@@ -92,7 +92,7 @@ def get_line_number_by_title(file_name, title):
         an integer
     '''
     try:
-        return([title in game for game in read_file(file_name)].index(True)+1)
+        return([title in game for game in read_file(file_name)].index(True)+1)  # return if any is True, finds index
     except BaseException:
         raise ValueError
 
@@ -128,11 +128,14 @@ def sort_abc(file_name):
     Returns:
         a list of strings
     '''
-    lower_list = list(string.printable)
+    printable_list = list(string.printable)
+
     first_letters = []
     second_letter = []
     third_letter = []
+
     titles = []
+
     for row in read_file(file_name):
         first_letters.append(row[0][0])
     for row in read_file(file_name):
@@ -141,20 +144,18 @@ def sort_abc(file_name):
         third_letter.append(row[0][2])
     for row in read_file(file_name):
         titles.append(row[0])
+
     indexlist1 = []
     indexlist2 = []
     indexlist3 = []
-    for letter in first_letters:
-        indexlist1.append(lower_list.index(letter))
-    for letter in second_letter:
-        indexlist2.append(lower_list.index(letter))
-    for letter in third_letter:
-        indexlist3.append(lower_list.index(letter))
 
-    mix = list(zip(indexlist1, indexlist2, indexlist3, titles))
-    a = sort_list(mix)
-    b = [row[-1] for row in a]
-    return(b)
+    for letter in first_letters:
+        indexlist1.append(printable_list.index(letter))
+    for letter in second_letter:
+        indexlist2.append(printable_list.index(letter))
+    for letter in third_letter:
+        indexlist3.append(printable_list.index(letter))
+    return [row[-1] for row in sort_list(list(zip(indexlist1, indexlist2, indexlist3, titles)))]
 
 
 def get_genres(file_name):
@@ -167,8 +168,8 @@ def get_genres(file_name):
     '''
     genres = []
     for i, game in enumerate(read_file(file_name)):
-        genres.append(read_file(file_name)[i][3])
-    return(sorted(set(genres), key=str.lower))
+        genres.append(read_file(file_name)[i][3])  # 3 is for the genres
+    return(sorted(set(genres), key=str.lower))  # "a" and "A" is different for sorted
 
 
 def when_was_top_sold_fps(file_name):
@@ -183,8 +184,8 @@ def when_was_top_sold_fps(file_name):
     if decide("game_stat.txt", "First-person shooter"):
         for i, game in enumerate(read_file(file_name)):
             if read_file(file_name)[i][3] == "First-person shooter":
-                sold.append(read_file(file_name)[i][1])
-                date.append(read_file(file_name)[i][2])
+                sold.append(read_file(file_name)[i][1])  # 1 is for nr.sold
+                date.append(read_file(file_name)[i][2])  # 2 is for release_date
         mix = list(zip(sold, date))
         return int(sorted(mix, key=lambda x: x[0], reverse=True)[0][1])
     else:
