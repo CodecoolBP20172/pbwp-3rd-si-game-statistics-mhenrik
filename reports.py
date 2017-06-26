@@ -74,20 +74,57 @@ def line_number_by_title(file_name, title):
         raise ValueError
 
 
+def sort_list(indexlist):
+    i = 1
+    while i < len(indexlist):
+        j = 0
+        while j <= len(indexlist) -2 :
+            if indexlist[j] > indexlist[j+1]:
+                temp = indexlist[j+1]
+                indexlist[j+1] = indexlist[j]
+                indexlist[j] = temp
+                j = j + 1
+            else:
+                j = j+1
+        i = i +1
+    return(indexlist)
+
 def sort_abc(file_name):
     '''
     Sorts the games by title.
     Argument: a file name
     Returns: a list of strings
     '''
-    first = 0
-    a = list(string.ascii_uppercase)
-    sorted1 = []
+
+    lower_list = list(string.printable)
+    first_letters = []
+    second_letter = []
+    third_letter = []
+    titles = []
     for row in read_file(file_name):
-        sorted1.append(row[0][0])
-    print(sorted1)
+        first_letters.append(row[0][0])
+    for row in read_file(file_name):
+        second_letter.append(row[0][1])
+    for row in read_file(file_name):
+        third_letter.append(row[0][2])
+    for row in read_file(file_name):
+        titles.append(row[0])
+    indexlist1 = []
+    indexlist2 = []
+    indexlist3 = []
+    for letter in first_letters:
+        indexlist1.append(lower_list.index(letter))
+    for letter in second_letter:
+        indexlist2.append(lower_list.index(letter))
+    for letter in third_letter:
+        indexlist3.append(lower_list.index(letter))
 
+    mix = list(zip(indexlist1, indexlist2, indexlist3, titles))
+    a = sort_list(mix)
+    b = [row[-1] for row in a]
+    print(b)
 
+sort_abc("game_stat.txt")
 
 def get_genres(file_name):
     '''
@@ -114,8 +151,6 @@ def when_was_top_sold_fps(file_name):
                 sold.append(read_file(file_name)[i][1])
                 date.append(read_file(file_name)[i][2])
         mix = list(zip(sold,date))
-        return sorted(mix, key = lambda x: x[0], reverse=True)[0][1]
+        return sorted(mix, key = lambda x: x[0], reverse = True)[0][1]
     else:
         raise ValueError
-
-print(when_was_top_sold_fps("game_stat.txt"))
