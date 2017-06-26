@@ -1,4 +1,5 @@
 import csv
+import math
 # Report functions
 
 
@@ -76,3 +77,15 @@ def count_longest_title(file_name):
     titles = [row[0] for row in read_file(file_name)]
     lengths = [len(title) for title in titles]
     return max(lengths)
+
+
+def get_date_avg(file_name):
+    '''
+    Finds the average of the release dates.
+    Args:
+        param1: a file name
+    Return:
+        a rounded up integer
+    '''
+    sales = [row[2] for row in read_file(file_name)]
+    return math.ceil(sum(sales)/len(sales))
