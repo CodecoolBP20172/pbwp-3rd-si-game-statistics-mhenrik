@@ -51,7 +51,7 @@ def sum_sold(file_name):
     Returns:
         a float
     '''
-    return sum([row[1] for row in read_file(file_name)])
+    return sum([row[1] for row in read_file(file_name)])  # 1 is for the nr. of sold copies
 
 
 def get_selling_avg(file_name):
@@ -62,8 +62,8 @@ def get_selling_avg(file_name):
     Returns:
         a float
     '''
-    sales = [row[1] for row in read_file(file_name)]
-    return sum(sales)/len(sales)
+    sales = [row[1] for row in read_file(file_name)]  # 1 is for the nr. of sold copies
+    return sum(sales)/len(sales)  # get avg
 
 
 def count_longest_title(file_name):
@@ -74,7 +74,7 @@ def count_longest_title(file_name):
     Returns:
         an integer
     '''
-    titles = [row[0] for row in read_file(file_name)]
+    titles = [row[0] for row in read_file(file_name)]  # 0 is for the title
     lengths = [len(title) for title in titles]
     return max(lengths)
 
@@ -87,8 +87,8 @@ def get_date_avg(file_name):
     Return:
         a rounded up integer
     '''
-    sales = [row[2] for row in read_file(file_name)]
-    return math.ceil(sum(sales)/len(sales))
+    sales = [row[2] for row in read_file(file_name)]  # 2 is for the dates
+    return math.ceil(sum(sales)/len(sales))  # round up is ceil
 
 
 def get_game(file_name, title):
@@ -100,7 +100,7 @@ def get_game(file_name, title):
     Returns:
         a list with all the properties
     '''
-    return read_file(file_name)[[title in game for game in read_file(file_name)].index(True)]
+    return read_file(file_name)[[title in game for game in read_file(file_name)].index(True)]  # almost as in part1
 
 
 def count_grouped_by_genre(file_name):
@@ -114,7 +114,7 @@ def count_grouped_by_genre(file_name):
     genres = []
     for i, game in enumerate(read_file(file_name)):
         genres.append(read_file(file_name)[i][3])  # 3 is for the genres
-    return dict(set(list(zip(genres, [genres.count(genre) for genre in genres]))))
+    return dict(set(list(zip(genres, [genres.count(genre) for genre in genres]))))  # create dict with comprehension
 
 
 def get_date_ordered(file_name):
@@ -131,6 +131,6 @@ def get_date_ordered(file_name):
     for i, game in enumerate(read_file(file_name)):  # i for indexing the file
         dates.append(read_file(file_name)[i][2])  # 2 is for the dates
         title.append(read_file(file_name)[i][0])  # 0 is for title
-    for year, title in sorted(list(zip(dates, title)), key=lambda x: (-x[0], x[1].lower()), reverse=False):
+    for year, title in sorted(list(zip(dates, title)), key=lambda x: (-x[0], x[1].lower()), reverse=False):   # -1 for reverse
         final_list.append(title)
     return final_list
