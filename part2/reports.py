@@ -1,5 +1,6 @@
 import csv
 import math
+import string
 # Report functions
 
 
@@ -23,7 +24,7 @@ def read_file(file_name):
             publisher = 4
             data.append([row[title], float(row[number_sold]),
                         int(row[release_date]), row[genre], row[publisher]])
-        return(data)
+    return(data)
 
 
 def get_most_played(file_name):
@@ -39,8 +40,7 @@ def get_most_played(file_name):
     for i, game in enumerate(read_file(file_name)):  # i for indexing the file
         copies.append(read_file(file_name)[i][1])  # 1 is for the nr. of copies
         title.append(read_file(file_name)[i][0])  # 0 is for title
-    mix = list(zip(copies, title))  # join the lists
-    return(sorted(mix, key=lambda x: x[0], reverse=True)[0][1])  # key is for the sorted the find the years
+    return(sorted(list(zip(copies, title)), key=lambda x: x[0], reverse=True)[0][1])
 
 
 def sum_sold(file_name):
@@ -112,10 +112,25 @@ def count_grouped_by_genre(file_name):
         dictionary with this structure: { [genre] : [count] }
     '''
     genres = []
-    genres_number = []
     for i, game in enumerate(read_file(file_name)):
         genres.append(read_file(file_name)[i][3])  # 3 is for the genres
-    for genre in genres:
-        genres_number.append(genres.count(genre))
-    mix = list(zip(genres, genres_number))
-    return dict(set(mix))
+    return dict(set(list(zip(genres, [genres.count(genre) for genre in genres]))))
+
+
+def get_date_ordered(file_name):
+    '''
+    Finds the date ordered list of the game.
+    Args:
+        param1: a file name
+    Returns:
+        a list
+    '''
+    dates = []
+    title = []
+    final_list = []
+    for i, game in enumerate(read_file(file_name)):  # i for indexing the file
+        dates.append(read_file(file_name)[i][2])  # 2 is for the dates
+        title.append(read_file(file_name)[i][0])  # 0 is for title
+    for year, title in sorted(list(zip(dates, title)), key=lambda x: (-x[0], x[1].lower()), reverse=False):
+        final_list.append(title)
+    return final_list
