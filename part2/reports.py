@@ -51,3 +51,15 @@ def sum_sold(file_name):
         a float
     '''
     return sum([row[1] for row in read_file(file_name)])
+
+
+def get_selling_avg(file_name):
+    '''
+    Finds the average selling.
+    Args:
+        param1: a file name
+    Returns:
+        a float
+    '''
+    sales = [row[1] for row in read_file(file_name)]
+    return sum(sales)/len(sales)
