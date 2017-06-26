@@ -89,3 +89,15 @@ def get_date_avg(file_name):
     '''
     sales = [row[2] for row in read_file(file_name)]
     return math.ceil(sum(sales)/len(sales))
+
+
+def get_game(file_name, title):
+    '''
+    Finds the properties of a given game.
+    Args:
+        param1: a file name
+        param2: a title as string
+    Returns:
+        a list with all the properties
+    '''
+    return read_file(file_name)[[title in game for game in read_file(file_name)].index(True)]
