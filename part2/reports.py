@@ -101,3 +101,21 @@ def get_game(file_name, title):
         a list with all the properties
     '''
     return read_file(file_name)[[title in game for game in read_file(file_name)].index(True)]
+
+
+def count_grouped_by_genre(file_name):
+    '''
+    Finds how many games are there grouped by genre.
+    Args:
+        param1: a file name
+    Returns:
+        dictionary with this structure: { [genre] : [count] }
+    '''
+    genres = []
+    genres_number = []
+    for i, game in enumerate(read_file(file_name)):
+        genres.append(read_file(file_name)[i][3])  # 3 is for the genres
+    for genre in genres:
+        genres_number.append(genres.count(genre))
+    mix = list(zip(genres, genres_number))
+    return dict(set(mix))
