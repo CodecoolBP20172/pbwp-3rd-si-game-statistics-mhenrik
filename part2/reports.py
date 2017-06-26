@@ -63,3 +63,16 @@ def get_selling_avg(file_name):
     '''
     sales = [row[1] for row in read_file(file_name)]
     return sum(sales)/len(sales)
+
+
+def count_longest_title(file_name):
+    '''
+    Finds how many characters long is the longest title.
+    Args:
+        param1: a file name
+    Returns:
+        an integer
+    '''
+    titles = [row[0] for row in read_file(file_name)]
+    lengths = [len(title) for title in titles]
+    return max(lengths)
